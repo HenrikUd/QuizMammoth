@@ -12,6 +12,8 @@ const answerRoutes = require('./routes/answer-routes');
 const keys = require('./config/keys');
 const passportSetup = require('./config/passport-setup');
 const connectDB = require('./config/db');
+require('dotenv').config();
+
 
 const app = express();
 
@@ -22,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Configure CORS
 const corsOptions = {
-    origin: 'http://localhost:5173', 
+    origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173', 
     credentials: true,
     optionSuccessStatus: 200
 };
