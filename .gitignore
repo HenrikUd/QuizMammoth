@@ -2,4 +2,3 @@ node_modules/
 dist/
 .env
 MammothBackEnd/config/keys.js
-MammothBackEnd/config/db.js
