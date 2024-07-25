@@ -1,0 +1,90 @@
+/* Profile-specific styles */
+.profile-container header h1,
+.profile-container header h2,
+.profile-container header p,
+.profile-container button,
+.profile-container .strong {
+    font-family: "Varela", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.profile-container header h1,
+.profile-container header h2 {
+    text-align: center;
+    color: #333;
+}
+
+.profile-container header p {
+    text-align: center;
+    font-size: 1em;
+    color: #666;
+}
+
+/* List Styles */
+.profile-container ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.profile-container li {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.profile-container li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Varela", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+}
+
+.profile-container li a:hover {
+    text-decoration: underline;
+}
+
+.profile-container li div {
+    margin: 5px 0;
+}
+
+.profile-container li strong {
+    font-weight: bold;
+    font-family: "Varela", sans-serif;
+}
+
+/* Button Styles */
+.profile-container button {
+    background: #39354c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    font-family: "Varela", sans-serif;
+}
+
+.profile-container button:hover {
+    background: #e14a4a;
+}
+
+.profile-container button:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+/* Loading and Status Messages */
+.profile-container .loading,
+.profile-container .status-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    font-family: "Varela", sans-serif;
+}

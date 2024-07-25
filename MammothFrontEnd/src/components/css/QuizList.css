@@ -1,0 +1,90 @@
+/* QuizList-specific styles */
+.quizlist-container header h1,
+.quizlist-container header h2 {
+    text-align: center;
+    font-family: "Varela", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #333;
+}
+
+.quizlist-container header p {
+    text-align: center;
+    font-size: 1em;
+    color: #666;
+}
+
+/* Input Styles */
+.quizlist-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Varela", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.quizlist-container input[type="text"]:focus {
+    outline: none;
+    border-color: #39354c;
+}
+
+/* Question and Answer Container */
+.quizlist-container .question-container {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+.quizlist-container button {
+    background: #39354c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    font-family: "Varela", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.quizlist-container button:hover {
+    background: #e14a4a;
+}
+
+.quizlist-container button:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+/* Loading and Status Messages */
+.quizlist-container .loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    font-family: "Varela", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.quizlist-container .status-message {
+    text-align: center;
+    font-size: 1em;
+    color: #666;
+    font-family: "Varela", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.strong {
+    font-family: "Varela", sans-serif;
+
+}

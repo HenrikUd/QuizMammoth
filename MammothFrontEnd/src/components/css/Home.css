@@ -1,0 +1,85 @@
+body {
+        margin: 0px;
+}
+
+nav {
+    background: #39354c;
+    padding: 20px 10px;
+    font-family: "Varela", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    
+}
+
+nav ul {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+nav li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+nav a {
+    color: #fff;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+main, header {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 0 10px;
+    color: #333;
+}
+
+/* Button styles */
+button {
+    background: #39354c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    font-family: "Varela", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+}
+
+button:hover {
+    background: #e14a4a;
+}
+
+button:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+p {
+    font-family: "Varela", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+}
+
+h1 {
+    font-family: "Varela", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h2 {
+    font-family: "Varela", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+}
+
+ul {
+    list-style-type: none;
+}
