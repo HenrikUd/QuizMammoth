@@ -1,27 +1,22 @@
 import React, { useEffect } from 'react';
-import { googleAuth } from '../components/authService';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useUser } from '../components/context/UserContext';
+import { googleAuth } from '../components/authService';
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
   const { userId, checkAuthStatus } = useUser();
 
   useEffect(() => {
-    // Define a function to handle the redirection
-    const handleRedirect = async () => {
-      await checkAuthStatus(); // Ensure the auth status is updated
-      if (userId) {
-        navigate('/profile'); // Navigate to profile if userId is available
-      }
-    };
-
-    handleRedirect();
-  }, [userId, checkAuthStatus, navigate]);
+    checkAuthStatus(); // Ensure auth status is checked on mount
+  }, []);
 
   const handleGoogleLogin = () => {
     googleAuth(); // Redirect to Google OAuth
   };
+
+  if (userId) { // If user is already logged in, redirect to profile
+    return <Navigate to="/profile" />;
+  }
 
   return (
     <div>

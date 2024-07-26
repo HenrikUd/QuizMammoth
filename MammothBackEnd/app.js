@@ -1,3 +1,4 @@
+require('dotenv').config({path:__dirname+'/./../../.env'})
 const express = require('express');
 const path = require('path');
 const passport = require('passport');
@@ -9,12 +10,8 @@ const profileRoutes = require('./routes/profile-routes');
 const usersRoutes = require('./routes/users-routes'); 
 const userQuizRoutes = require('./routes/user-quizzes'); // New user-quiz routes
 const answerRoutes = require('./routes/answer-routes');
-const keys = require('./config/keys');
-const passportSetup = require('./config/passport-setup');
 const connectDB = require('./config/db');
-require('dotenv').config();
-
-
+require('./config/passport-setup'); // Ensure this line is present
 const app = express();
 
 // Parse incoming requests with JSON payloads
@@ -23,21 +20,33 @@ app.use(express.urlencoded({ extended: false }));
 
 
 // Configure CORS
+// Get allowed origins from environment variable
+const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',');
+
+// Configure CORS
 const corsOptions = {
-    origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173', 
+    origin: (origin, callback) => {
+        // Check if the origin is in the list of allowed origins or if it's a local request with no origin
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
-    optionSuccessStatus: 200
+    optionsSuccessStatus: 200
 };
+
 app.use(cors(corsOptions));
 
 
 
 // Initialize session with MongoDB store
 app.use(session({
-    secret: keys.session.cookieKey,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: keys.mongodb.dbURI, collectionName: 'sessions' }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI, collectionName: 'sessions' }),
     cookie: { maxAge: 24 * 60 * 60 * 1000 } // 1 day
 }));
 

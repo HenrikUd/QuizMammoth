@@ -9,7 +9,7 @@ const QuizForm: React.FC<{ setInputs: React.Dispatch<React.SetStateAction<string
 
   useEffect(() => {
     checkAuthStatus(); // Ensure auth status is checked on mount
-  }, [checkAuthStatus]);
+  }, []);
 
   if (!userId) { // Login check
     return <Navigate to="/auth/login" state={{ message: 'You must be logged in to view this page' }} />;

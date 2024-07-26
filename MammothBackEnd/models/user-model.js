@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true // Assuming Google IDs are unique
   },
+  accessToken: {
+    type: String
+  },
+  refreshToken: {
+    type: String
+  },
   quizzes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Quiz'
@@ -28,6 +34,7 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+  
   // Add other necessary fields here
 });
 

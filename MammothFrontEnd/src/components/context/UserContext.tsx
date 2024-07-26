@@ -1,19 +1,22 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import axios from 'axios';
 
-export interface UserContextType {
+interface UserContextType {
   userId: string | null;
   setUserId: (id: string | null) => void;
-  checkAuthStatus: () => void; // Add a function to check authentication status
+  checkAuthStatus: () => void;
+  isLoading: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userId, setUserId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const checkAuthStatus = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get('http://localhost:8082/api/auth/check', { withCredentials: true });
       console.log('Auth check response:', response.data);
       if (response.data.loggedIn) {
@@ -24,6 +27,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } catch (error) {
       console.error('Error checking authentication status', error);
       setUserId(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -32,7 +37,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   return (
-    <UserContext.Provider value={{ userId, setUserId, checkAuthStatus }}>
+    <UserContext.Provider value={{ userId, setUserId, checkAuthStatus, isLoading }}>
       {children}
     </UserContext.Provider>
   );

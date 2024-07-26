@@ -1,8 +1,7 @@
 // db.js
 
 const mongoose = require("mongoose");
-require('dotenv').config();
-
+require('dotenv').config({path:__dirname+'/./../../.env'})
 const db = process.env.MONGODB_URI;
 mongoose.set("strictQuery", true, "useNewUrlParser", true);
 

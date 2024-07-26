@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useUser } from './context/UserContext';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './css/Profile.css';
+import { User } from '../App'; // User types
+import { useUser } from './context/UserContext';
+
+
 
 interface Quiz {
   _id: string;
@@ -19,14 +22,6 @@ interface Answer {
   __v: number;
 }
 
-interface User {
-  _id: string;
-  username: string;
-  email: string;
-  quizzes: Quiz[];
-  uuid: string;
-  userId: string | null;
-}
 
 interface ProfileProps {
   user: User | null;
@@ -34,22 +29,31 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
-  const { userId } = useUser();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [answers, setAnswers] = useState<{ [key: string]: Answer[] }>({});
-  const [loading, setLoading] = useState(true);
   const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
   const [copyStatus, setCopyStatus] = useState<string | null>(null);
   const [showAnswers, setShowAnswers] = useState<{ [key: string]: boolean }>({});
-  const location = useLocation(); 
+  const { userId, checkAuthStatus } = useUser();
+  const navigate = useNavigate();
+
 
 
   useEffect(() => {
+    const handleRedirect = async () => {
+      await checkAuthStatus(); // Ensure the auth status is updated
+      if (!userId) {
+        navigate('/auth/login'); // Navigate to profile if userId is available
+      }
+    };
+
+    handleRedirect();
+    
+    if (userId) {
+      
     const fetchUserProfile = async () => {
-      try {
-        if (!userId) {
-          return;
-        }
+      
+      
         const userResponse = await axios.get(`http://localhost:8082/api/${userId}/quizzes/all`);
         const quizzes: Quiz[] = userResponse.data.map((quiz: any) => ({
           ...quiz,
@@ -69,15 +73,11 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         }, {} as { [key: string]: Answer[] });
 
         setAnswers(groupedAnswers);
-      } catch (error) {
-        console.error('Error fetching user profile, quizzes, or answers', error);
-      } finally {
-        setLoading(false);
-      }
+    
     };
 
     fetchUserProfile();
-  }, [userId]);
+}}, [userId]);
 
   const handleDeleteQuiz = async (quizUuid: string) => {
   
@@ -138,13 +138,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     }));
   };
 
-  if (!userId) {
-    return <Navigate to="/auth/login" state={{ from: location, message: 'You must be logged in to view this page' }} />;
-  }
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+ 
 
   return (
     <div className="profile-container">

@@ -6,6 +6,7 @@ import { useUser } from "./context/UserContext"; // Import the User context
 interface SubmitAnswersProps {
   answers: any;
   uuid: string;
+  theinputs: string[];
 }
 
 const SubmitAnswers: React.FC<SubmitAnswersProps> = ({ answers, uuid }) => {

@@ -12,7 +12,7 @@ import { UUIDProvider } from './components/context/UuidContext';
 import SubmitQuiz from './components/SubmitQuiz';
 import axios from 'axios';
 
-interface User {
+export interface User {
   _id: string;
   username: string;
   email: string;
@@ -72,7 +72,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth/login" element={<Login />} />
-            <Route path="/profile" element={userId ? <Profile user={user} /> : <Navigate to="/auth/login" />} />
+            <Route path="/profile" element={userId ? <Profile user={user} userId={userId} /> : <Navigate to="/auth/login" />} />
             <Route path="/quizform" element={userId ? <QuizForm inputs={inputs} setInputs={setInputs} user={user} handleLogout={handleLogout} /> : <Navigate to="/auth/login" />} />
             <Route path="/quizlist/:uuid" element={<QuizList inputs={inputs} answers={answers} setAnswers={setAnswers} uuid={undefined} />} />
             <Route path="/thankyou" element={<ThankYou />} />
