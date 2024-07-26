@@ -81,7 +81,7 @@ const QuizList: React.FC<QuizListProps> = (props) => {
     <div>
       <header>
         {myInputs}
-        {uuid && <SubmitAnswers answers={answers} theinputs={questions} uuid={uuid}/>}
+        {uuid && <SubmitAnswers answers={answers} uuid={uuid}/>}
       </header>
     </div>
   );
