@@ -17,7 +17,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get('http://localhost:8082/api/auth/check', { withCredentials: true });
+      const response = await axios.get('https://quiz-mammoth.vercel.app/api/auth/check', { withCredentials: true });
       console.log('Auth check response:', response.data);
       if (response.data.loggedIn) {
         setUserId(response.data.userId);

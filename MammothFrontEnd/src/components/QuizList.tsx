@@ -24,7 +24,7 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8082/api/${userId}/quizzes/all`);
+        const response = await axios.get(`https://quiz-mammoth.vercel.app/api/${userId}/quizzes/all`);
         const quizData = response.data;
         
         // Find the quiz object with the matching UUID

@@ -31,7 +31,7 @@ const SubmitQuiz: React.FC<SubmitQuizProps> = ({ theinputs, answers }) => {
       console.log("Submitting quiz with UUID:", generatedUuid);
       console.log("Questions:", quizzes);
   
-      const response = await axios.post(`http://localhost:8082/api/${userId}/quizzes`, {
+      const response = await axios.post(`https://quiz-mammoth.vercel.app/api/${userId}/quizzes`, {
         uuid: generatedUuid,
         quizzes
       }, {

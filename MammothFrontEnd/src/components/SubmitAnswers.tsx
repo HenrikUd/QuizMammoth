@@ -26,7 +26,7 @@ const SubmitAnswers: React.FC<SubmitAnswersProps> = ({ answers, uuid }) => {
     e.preventDefault();
     console.log({ answers, uuid });
     axios
-      .post(`http://localhost:8082/api/${userId}/answers`, { answers, uuid }, {
+      .post(`https://quiz-mammoth.vercel.app/api/${userId}/answers`, { answers, uuid }, {
         headers: {
           "Content-Type": "application/json",
         },
