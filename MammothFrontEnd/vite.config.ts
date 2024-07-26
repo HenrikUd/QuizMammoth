@@ -9,7 +9,7 @@ export default defineConfig({
   },
   root: './',
   build: {
-    outDir: './build',
+    outDir: 'build',
   },
   optimizeDeps: {
     esbuildOptions: {

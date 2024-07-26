@@ -1,19 +1,18 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "MammothFrontEnd/package.json",
-        "use": "@vercel/static-build",
-        "config": { "distDir": "MammothFrontEnd/build" }
-      }
-    ],
-    "routes": [
-      { "src": "/api/(.*)", "dest": "/api/$1" },
-      { "src": "/(.*)", "dest": "MammothFrontEnd/build/$1" }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    {
+      "src": "MammothBackEnd/package.json",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "MammothFrontEnd/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "MammothFrontEnd/build/$1" }
+  ]
+}
