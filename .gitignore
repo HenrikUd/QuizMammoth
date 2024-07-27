@@ -1,4 +1,5 @@
 node_modules/
 dist/
 .env
-MammothBackEnd/config/keys.js
+.env.production
+.production

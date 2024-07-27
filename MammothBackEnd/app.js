@@ -1,4 +1,5 @@
-require('dotenv').config({path:__dirname+'/./../../.env'})
+const envFile = process.env.NODE_ENV === 'production' ? '../../.env.production' : '../../.env';
+require('dotenv').config({ path: path.resolve(__dirname, '..', envFile) });
 const express = require('express');
 const path = require('path');
 const passport = require('passport');
@@ -99,3 +100,6 @@ connectDB()
     console.error('Error connecting to MongoDB:', err);
     process.exit(1);
   });
+// Export the app and API base URL based on the environment
+const apiBaseUrl = process.env.API_URL;
+module.exports = { app, apiBaseUrl };

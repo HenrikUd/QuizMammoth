@@ -29,6 +29,7 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
+  const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8082';
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [answers, setAnswers] = useState<{ [key: string]: Answer[] }>({});
   const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
@@ -54,14 +55,14 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     const fetchUserProfile = async () => {
       
       
-        const userResponse = await axios.get(`https://quiz-mammoth.vercel.app/api/${userId}/quizzes/all`);
+        const userResponse = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`);
         const quizzes: Quiz[] = userResponse.data.map((quiz: any) => ({
           ...quiz,
           questions: quiz.quizzes.questions,
         })) || [];
         setQuizzes(quizzes);
 
-        const answersResponse = await axios.get(`https://quiz-mammoth.vercel.app/api/${userId}/answers/all`);
+        const answersResponse = await axios.get(`${apiBaseUrl}/api/${userId}/answers/all`);
         const rawAnswers: Answer[] = answersResponse.data || [];
 
         const groupedAnswers = rawAnswers.reduce((acc, answer) => {
@@ -82,7 +83,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const handleDeleteQuiz = async (quizUuid: string) => {
   
     try {
-      await axios.delete(`https://quiz-mammoth.vercel.app/api/${userId}/quizzes`, {
+      await axios.delete(`${apiBaseUrl}/api/${userId}/quizzes`, {
         params: { uuid: quizUuid },
         withCredentials: true,
       });
@@ -96,7 +97,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
   const handleDeleteAnswer = async (answerUuid: string) => {
     try {
-      await axios.delete(`https://quiz-mammoth.vercel.app/api/${userId}/answers/`, {
+      await axios.delete(`${apiBaseUrl}/api/${userId}/answers/`, {
         params: { uuid: answerUuid },
         withCredentials: true,
       });

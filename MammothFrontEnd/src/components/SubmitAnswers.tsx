@@ -9,9 +9,9 @@ interface SubmitAnswersProps {
 }
 
 const SubmitAnswers: React.FC<SubmitAnswersProps> = ({ answers, uuid }) => {
+  const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8082';
   const navigate = useNavigate();
   const { userId } = useUser(); // Use context to get the userId
-
   const [answerData, setAnswerData] = useState<any>({ answers: [] });
 
 
@@ -26,7 +26,7 @@ const SubmitAnswers: React.FC<SubmitAnswersProps> = ({ answers, uuid }) => {
     e.preventDefault();
     console.log({ answers, uuid });
     axios
-      .post(`https://quiz-mammoth.vercel.app/api/${userId}/answers`, { answers, uuid }, {
+      .post(`${apiBaseUrl}/api/${userId}/answers`, { answers, uuid }, {
         headers: {
           "Content-Type": "application/json",
         },

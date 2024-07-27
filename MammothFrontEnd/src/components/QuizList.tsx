@@ -14,6 +14,7 @@ type QuizListProps = {
 };
 
 const QuizList: React.FC<QuizListProps> = (props) => {
+  const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8082';
   const { uuid } = useParams<{ uuid: string | undefined }>(); 
   const { userId } = useUser();
   const [questions, setQuestions] = useState<string[]>(props.inputs); // State for questions
@@ -24,7 +25,7 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://quiz-mammoth.vercel.app/api/${userId}/quizzes/all`);
+        const response = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`);
         const quizData = response.data;
         
         // Find the quiz object with the matching UUID

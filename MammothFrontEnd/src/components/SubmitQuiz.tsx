@@ -12,6 +12,7 @@ interface SubmitQuizProps {
 }
 
 const SubmitQuiz: React.FC<SubmitQuizProps> = ({ theinputs, answers }) => {
+  const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8082';
   const navigate = useNavigate();
   const { setUuid } = useUUID(); // Use context to set the UUID
   const { userId } = useUser();
@@ -31,7 +32,7 @@ const SubmitQuiz: React.FC<SubmitQuizProps> = ({ theinputs, answers }) => {
       console.log("Submitting quiz with UUID:", generatedUuid);
       console.log("Questions:", quizzes);
   
-      const response = await axios.post(`https://quiz-mammoth.vercel.app/api/${userId}/quizzes`, {
+      const response = await axios.post(`${apiBaseUrl}/api/${userId}/quizzes`, {
         uuid: generatedUuid,
         quizzes
       }, {
