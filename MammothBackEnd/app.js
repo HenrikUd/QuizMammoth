@@ -93,7 +93,7 @@ app.get('*', (req, res) => {
 // Connect to MongoDB and start the server
 connectDB()
   .then(() => {
-    const port = process.env.PORT || 8082;
+    const port = process.env.PORT;
     app.listen(port, () => console.log(`Server running on port ${port}`));
   })
   .catch(err => {
