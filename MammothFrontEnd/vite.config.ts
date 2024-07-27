@@ -1,16 +1,11 @@
-import { defineConfig, loadEnv } from 'vite';
+import { loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 
-// https://vitejs.dev/config/
-export default ({ mode }) => {
-  // Load environment variables based on mode (development or production)
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
-  // Update process.env with loaded variables
-  Object.assign(process.env, env);
-
-  return defineConfig({
+  return {
     plugins: [react()],
     esbuild: {
       loader: 'tsx',
@@ -30,11 +25,26 @@ export default ({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: process.env.VITE_API_URL || 'http://localhost:8082',
+          target: env.VITE_API_URL || 'http://localhost:8082',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
+        '/auth': {
+          target: env.VITE_API_URL || 'http://localhost:8082',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/auth/, ''),
+        },
+        '/profile': {
+          target: env.VITE_API_URL || 'http://localhost:8082',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/profile/, ''),
+        },
+        '/users': {
+          target: env.VITE_API_URL || 'http://localhost:8082',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/users/, ''),
+        },
       },
     },
-  });
-};
+  };
+});

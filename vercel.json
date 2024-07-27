@@ -2,17 +2,25 @@
   "version": 2,
   "builds": [
     {
-      "src": "MammothBackEnd/package.json",
-      "use": "@vercel/node"
-    },
-    {
       "src": "MammothFrontEnd/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "./build" }
+      "config": {
+        "distDir": "MammothFrontEnd/build"
+      }
+    },
+    {
+      "src": "MammothBackEnd/app.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "MammothFrontEnd/build/$1" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "MammothFrontEnd/build/$1"
+    }
   ]
 }
