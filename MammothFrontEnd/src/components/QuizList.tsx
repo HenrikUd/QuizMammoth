@@ -14,7 +14,7 @@ type QuizListProps = {
 };
 
 const QuizList: React.FC<QuizListProps> = (props) => {
-  const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8082';
+  const apiBaseUrl = process.env.API_URL || 'http://localhost:8082';
   const { uuid } = useParams<{ uuid: string | undefined }>(); 
   const { userId } = useUser();
   const [questions, setQuestions] = useState<string[]>(props.inputs); // State for questions

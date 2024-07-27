@@ -9,7 +9,7 @@ interface SubmitAnswersProps {
 }
 
 const SubmitAnswers: React.FC<SubmitAnswersProps> = ({ answers, uuid }) => {
-  const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8082';
+  const apiBaseUrl = process.env.API_URL || 'http://localhost:8082';
   const navigate = useNavigate();
   const { userId } = useUser(); // Use context to get the userId
   const [answerData, setAnswerData] = useState<any>({ answers: [] });
