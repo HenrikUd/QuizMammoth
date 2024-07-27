@@ -66,7 +66,7 @@ app.get('/api/auth/check', (req, res) => {
 app.use(express.static(path.join(__dirname, '..', 'MammothFrontEnd', 'build')));
 
 app.get('/', (req, res) => {
-    res.status(200).send('Hello, World, This is my API!');
+    res.status(200).send('Hello, World, This is my API!, Check it out!');
 });
 
 app.use((err, req, res, next) => {
