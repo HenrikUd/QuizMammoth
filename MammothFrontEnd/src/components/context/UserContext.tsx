@@ -11,13 +11,14 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const apiBaseUrl = process.env.API_URL || 'http://localhost:8082';
+  const apiBaseUrl = process.env.VITE_API_URL || 'http://localhost:8082';
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
+      console.log(apiBaseUrl)
       const response = await axios.get(`${apiBaseUrl}/api/auth/check`, { withCredentials: true });
       console.log('Auth check response:', response.data);
       if (response.data.loggedIn) {
