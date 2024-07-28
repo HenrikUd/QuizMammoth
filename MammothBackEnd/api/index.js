@@ -10,11 +10,10 @@ const profileRoutes = require('./routes/profile-routes');
 const usersRoutes = require('./routes/users-routes'); 
 const userQuizRoutes = require('./routes/user-quizzes'); 
 const answerRoutes = require('./routes/answer-routes');
-const connectDB = require('./config/db');
 
 dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
-require('./config/passport-setup');
+require('../config/passport-setup');
 
 const app = express();
 
