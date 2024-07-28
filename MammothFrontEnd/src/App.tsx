@@ -27,7 +27,7 @@ function App() {
   const [user, setUser] = useState<User | null>(null);
   const { userId, isLoading } = useUser();
   const navigate = useNavigate();
-  const apiBaseUrl = process.env.VITE_API_URL || 'http://localhost:8082';
+  const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8082';
 
   useEffect(() => {
     if (userId) {
