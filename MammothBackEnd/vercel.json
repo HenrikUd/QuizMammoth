@@ -1,12 +1,12 @@
 {
   "functions": {
-    "app.js": {
+    "api/index.js": {
       "memory": 1024,
       "maxDuration": 10
     }
   },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/app.js" }
+    { "source": "/(.*)", "destination": "/api" }
   ],
   "headers": [
     {

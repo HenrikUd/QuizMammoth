@@ -8,16 +8,25 @@ const db = process.env.MONGODB_URI;
 
 mongoose.set("strictQuery", true);
 
+let cachedDb = null;
+
 const connectDB = async () => {
+  if (cachedDb) {
+    return cachedDb;
+  }
+
   try {
-    await mongoose.connect(db, {
+    const conn = await mongoose.connect(db, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    
+    cachedDb = conn;
     console.log("MongoDB is Connected...");
+    return conn;
   } catch (err) {
-    console.error(err.message);
-    process.exit(1);
+    console.error("MongoDB connection error:", err.message);
+    throw err;
   }
 };
 
