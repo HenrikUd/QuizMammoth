@@ -27,13 +27,14 @@ function App() {
   const [user, setUser] = useState<User | null>(null);
   const { userId, isLoading } = useUser();
   const navigate = useNavigate();
+  const apiBaseUrl = process.env.VITE_API_URL || 'http://localhost:8082';
 
   useEffect(() => {
     if (userId) {
       
        const fetchUserData = async () => {
          try {
-           const response = await axios.get(`/api/users/${userId}`);
+           const response = await axios.get(`${apiBaseUrl}/api/users/${userId}`);
            setUser(response.data);
          } catch (error) {
            console.error('Error fetching user data:', error);
