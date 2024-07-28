@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('./models/user-model.js');
+const User = require('../../models/user-model.js');
 
 // Route to get user by ID
 router.get('/:userId', async (req, res) => {
