@@ -1,17 +1,16 @@
 import axios from 'axios';
 
-// Use the proxy prefix
-const API_URL = '/api/auth';
+const apiBaseUrl = process.env.VITE_API_URL || 'http://localhost:8082';
 
 export const googleAuth = () => {
     // Redirect the user to the backend endpoint that initiates Google OAuth
-    window.location.href = `${API_URL}/google`;
+    window.location.href = `${apiBaseUrl}/api/auth/google`;
 };
 
 export const getHome = async () => {
     
     try {
-        const response = await axios.get(`${API_URL}/home`);
+        const response = await axios.get(`${apiBaseUrl}/home`);
         return response.data;
         
     } catch (error) {
