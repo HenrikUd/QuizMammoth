@@ -56,9 +56,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRoutes);
-app.use('/profile', profileRoutes);
-app.use('/users', usersRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/users', usersRoutes);
 app.use('/api/user-quizzes', userQuizRoutes); 
 app.use('/api/answers', answerRoutes);
 
@@ -94,5 +94,9 @@ app.use((err, req, res, next) => {
     console.error('Error connecting to MongoDB:', err);
     process.exit(1);
   }); */
+
+  app.use('*', (req, res) => {
+    res.status(404).json({ error: 'Not Found' });
+  });
 
   module.exports = app;
