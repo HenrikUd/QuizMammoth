@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user-model'); // Ensure correct path to user model
-const Quiz = require('../models/Quiz'); // Ensure correct path to quiz model
+const Quiz = require('./models/Quiz'); // Ensure correct path to quiz model
 
 // Endpoint to save a quiz to a user's profile
 

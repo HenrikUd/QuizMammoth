@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Answer  = require('../models/Answers'); 
+const Answer  = require('./models/Answers'); 
 
 // Endpoint to save answers to a quiz for a user
 router.post('/:userId/answers', async (req, res) => {
