@@ -59,7 +59,7 @@ app.use(passport.session());
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/users', usersRoutes);
-app.use('/api/user-quizzes', userQuizRoutes); 
+app.use('/api', userQuizRoutes); 
 app.use('/api/answers', answerRoutes);
 
 app.get('/api/auth/check', (req, res) => {
