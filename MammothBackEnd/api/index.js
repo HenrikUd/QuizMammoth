@@ -28,21 +28,21 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',');
+const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app'];
 
 const corsOptions = {
-    origin: function (origin, callback) {
-        console.log('Request origin:', origin);
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.log('Origin not allowed:', origin);
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    optionsSuccessStatus: 200
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
 };
+
+
 
 app.use(cors(corsOptions));
 
