@@ -1,10 +1,6 @@
 {
   "version": 2,
-  "functions": {
-    "app.js": {
-      "runtime": "nodejs18"
-    }
-  },
+
   "headers": [
     {
       "source": "/api/(.*)",
