@@ -10,10 +10,18 @@ const profileRoutes = require('./routes/profile-routes');
 const usersRoutes = require('./routes/users-routes'); 
 const userQuizRoutes = require('./routes/user-quizzes'); 
 const answerRoutes = require('./routes/answer-routes');
+const connectDB = require('../config/db');
+
 
 dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
 require('../config/passport-setup');
+
+connectDB().then(() => {
+    console.log('Connected to MongoDB');
+  }).catch(err => {
+    console.error('Failed to connect to MongoDB', err);
+  });
 
 const app = express();
 
@@ -87,6 +95,4 @@ app.use((err, req, res, next) => {
     process.exit(1);
   }); */
 
-  module.exports = (req, res) => {
-    app(req, res);
-  };
+  module.exports = app;
