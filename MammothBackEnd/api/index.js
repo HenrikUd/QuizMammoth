@@ -28,10 +28,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app'];
+const allowedOrigins = ['https://quiz-mammoth.vercel.app', 'http://localhost:5173'];
 
-const corsOptions = {
+app.use(cors({
   origin: function (origin, callback) {
+    console.log('Request origin:', origin);
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -40,8 +41,16 @@ const corsOptions = {
   },
   credentials: true,
   optionsSuccessStatus: 200
-};
+}));
 
+// Make sure this is placed BEFORE your routes
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://quiz-mammoth.vercel.app');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+  next();
+});
 
 
 app.use(cors(corsOptions));
