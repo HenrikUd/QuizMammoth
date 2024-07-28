@@ -11,7 +11,7 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const apiBaseUrl = import.meta.env.VITE_API_URL;
+  const apiBaseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, '');
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
