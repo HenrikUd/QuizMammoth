@@ -31,17 +31,18 @@ app.use(express.urlencoded({ extended: false }));
 const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',');
 
 const corsOptions = {
-    origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
+    origin: function (origin, callback) {
+        console.log('Request origin:', origin);
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.log('Origin not allowed:', origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
     optionsSuccessStatus: 200
 };
-console.log('Allowed Origins:', allowedOrigins);
 
 app.use(cors(corsOptions));
 
@@ -50,7 +51,11 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI, collectionName: 'sessions' }),
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+    cookie: { 
+        maxAge: 24 * 60 * 60 * 1000,
+        secure: process.env.NODE_ENV === 'production', // use secure cookies in production
+        sameSite: 'none' // important for cross-site requests
+    }
 }));
 
 app.use(passport.initialize());
