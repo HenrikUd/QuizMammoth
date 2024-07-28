@@ -62,8 +62,8 @@ app.get('/api/auth/check', (req, res) => {
     }
 });
 
-app.use(express.static(path.join(__dirname, '..', 'MammothFrontEnd', 'build')));
-
+/* app.use(express.static(path.join(__dirname, '..', 'MammothFrontEnd', 'build')));
+ */
 app.get('/', (req, res) => {
     res.status(200).send('Hello, World, This is my API!, Check it out!');
 });
@@ -73,9 +73,9 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-app.get('*', (req, res) => {
+/* app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'MammothFrontEnd', 'build', 'index.html'));
-});
+}); */
 
 /* connectDB()
   .then(() => {
