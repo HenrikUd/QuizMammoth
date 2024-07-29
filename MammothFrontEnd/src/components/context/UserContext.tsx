@@ -19,7 +19,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setIsLoading(true);
       console.log(apiBaseUrl)
-      const response = await axios.get(`${apiBaseUrl}/api/auth/check`, { withCredentials: true });
+      const response = await axios.get(`api/auth/check`, { withCredentials: true });
       console.log('Auth check response:', response.data);
       if (response.data.loggedIn) {
         setUserId(response.data.userId);
