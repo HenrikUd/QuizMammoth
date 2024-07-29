@@ -4,7 +4,7 @@ const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8082';
 
 export const googleAuth = () => {
     // Redirect the user to the backend endpoint that initiates Google OAuth
-    window.location.href = `${apiBaseUrl}/api/auth/google`;
+    window.location.href = `https://mammothbackend.vercel.app/api/auth/google`;
 };
 
 export const getHome = async () => {
