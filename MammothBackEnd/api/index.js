@@ -70,11 +70,15 @@ app.use('/api', userQuizRoutes);
 app.use('/api/answers', answerRoutes);
 
 app.get('/api/auth/check', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.json({ loggedIn: true, userId: req.user._id });
-    } else {
-        res.json({ loggedIn: false });
-    }
+  console.log('Session ID:', req.sessionID);
+  console.log('Session data:', req.session);
+  if (req.isAuthenticated()) {
+      console.log('User is authenticated:', req.user);
+      res.json({ loggedIn: true, userId: req.user._id });
+  } else {
+      console.log('User is not authenticated');
+      res.json({ loggedIn: false });
+  }
 });
 
 /* app.use(express.static(path.join(__dirname, '..', 'MammothFrontEnd', 'build')));
