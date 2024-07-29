@@ -42,7 +42,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
   useEffect(() => {
     const handleRedirect = async () => {
-      await checkAuthStatus(); // Ensure the auth status is updated
+      await checkAuthStatus(); 
       if (!userId) {
         navigate('/auth/login'); // Navigate to profile if userId is available
       }

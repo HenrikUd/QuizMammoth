@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './components/context/UserContext';
 
 const rootElement = document.getElementById('root');
@@ -13,9 +13,9 @@ if (rootElement) {
   root.render(
     <React.StrictMode>
       <UserProvider>
-      <HashRouter>
+      <BrowserRouter>
         <App />
-      </HashRouter>
+      </BrowserRouter>
       </UserProvider>
     </React.StrictMode>
   );
