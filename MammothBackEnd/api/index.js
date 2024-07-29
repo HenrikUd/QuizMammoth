@@ -100,8 +100,8 @@ app.use((err, req, res, next) => {
     process.exit(1);
   }); */
 
-  app.use('*', (req, res) => {
+ /*  app.use('*', (req, res) => {
     res.status(404).json({ error: 'Not Found' });
-  });
+  }); */
 
   module.exports = app;
