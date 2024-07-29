@@ -35,7 +35,7 @@ router.get('/google/redirect', (req, res, next) => {
                 return res.status(500).send('An error occurred during login.');
             }
             // Redirect to the frontend app after successful login
-            console.log('Redirect route hit');
+            console.log('user logged in');
             return res.redirect('https://quiz-mammoth.vercel.app');
         });
     })(req, res, next);
