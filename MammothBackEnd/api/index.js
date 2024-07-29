@@ -28,14 +28,23 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app'];
 
-const cors = require('cors');
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+};
 
-// Use this instead of your current CORS configuration
-app.use(cors({
-  origin: true, // This allows all origins
-  credentials: true, // This allows cookies to be sent with the request
-}));
+
+
+app.use(cors(corsOptions));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
