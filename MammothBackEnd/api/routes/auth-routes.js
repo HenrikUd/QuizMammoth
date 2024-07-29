@@ -13,13 +13,13 @@ router.get('/logout', (req, res) => {
 });
 
 // Auth with Google
-router.get('/google', passport.authenticate('google', {
+router.get('/api/auth/google', passport.authenticate('google', {
     scope: ['profile'],
     prompt: 'select_account',
 }));
 
 // Callback route for Google to redirect to
-router.get('/google/redirect', (req, res, next) => {
+router.get('/api/auth/google/redirect', (req, res, next) => {
     passport.authenticate('google', (err, user, info) => {
         if (err) {
             console.error('Google Authentication Error:', err);
@@ -35,7 +35,7 @@ router.get('/google/redirect', (req, res, next) => {
                 return res.status(500).send('An error occurred during login.');
             }
             // Redirect to the frontend app after successful login
-            return res.redirect('http://localhost:5173/#/quizform');
+            return res.redirect('https://quiz-mammoth.vercel.app/quizform');
         });
     })(req, res, next);
 });
