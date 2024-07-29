@@ -18,7 +18,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      console.log(apiBaseUrl)
       const response = await axios.get(`${apiBaseUrl}/api/auth/check`, { withCredentials: true });
       console.log('Auth check response:', response.data);
       if (response.data.loggedIn) {
