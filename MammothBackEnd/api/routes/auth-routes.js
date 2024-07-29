@@ -13,13 +13,13 @@ router.get('/logout', (req, res) => {
 });
 
 // Auth with Google
-router.get('/api/auth/google', passport.authenticate('google', {
+router.get('/google', passport.authenticate('google', {
     scope: ['profile'],
     prompt: 'select_account',
 }));
 
 // Callback route for Google to redirect to
-router.get('/api/auth/google/redirect', (req, res, next) => {
+router.get('/google/redirect', (req, res, next) => {
     passport.authenticate('google', (err, user, info) => {
         if (err) {
             console.error('Google Authentication Error:', err);
