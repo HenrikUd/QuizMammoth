@@ -32,6 +32,24 @@ router.get('/:userId/quizzes/all', async (req, res) => {
   }
 });
 
+// Endpoint to get a single quiz by UUID
+router.get('/:userId/quizzes/:uuid', async (req, res) => {
+  const { uuid } = req.params;
+
+  try {
+    const quiz = await Quiz.findOne({ uuid });
+
+    if (!quiz) {
+      return res.status(404).json({ message: 'Quiz not found' });
+    }
+
+    res.status(200).json(quiz);
+  } catch (error) {
+    console.error('Error fetching quiz:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // Endpoint to delete a quiz by UUID
 router.delete('/:userId/quizzes', async (req, res) => {
   try {

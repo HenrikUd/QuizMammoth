@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './css/Profile.css';
 import { User } from '../App'; // User types
 import { useUser } from './context/UserContext';
@@ -54,7 +54,6 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       
     const fetchUserProfile = async () => {
       
-      console.log(apiBaseUrl)
         const userResponse = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`, { withCredentials: true });
         const quizzes: Quiz[] = userResponse.data.map((quiz: any) => ({
           ...quiz,
@@ -121,7 +120,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   
 
   const handleCopyLink = async (quizUuid: string) => {
-    const link = `${window.location.origin}/#/quizlist/${quizUuid}`;
+    const link = `${window.location.origin}/quizlist/${quizUuid}`;
     try {
       await navigator.clipboard.writeText(link);
       setCopyStatus('Link copied to clipboard');
@@ -151,7 +150,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           <ul>
             {quizzes.map((quiz, index) => (
               <li key={quiz._id}>
-                <a href={`/quizlist/${quiz.uuid}`}>Quiz {index + 1}: {quiz.title}</a>
+                <Link to={`/quizlist/${quiz.uuid}`}>Quiz {index + 1}: {quiz.title}</Link>
                 <button onClick={() => handleDeleteQuiz(quiz.uuid)}>Delete</button>
                 <button onClick={() => handleCopyLink(quiz.uuid)}>Copy Link</button>
               </li>
