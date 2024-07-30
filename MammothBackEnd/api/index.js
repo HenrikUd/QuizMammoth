@@ -57,9 +57,9 @@ app.use(session({
   cookie: { 
     maxAge: 24 * 60 * 60 * 1000, // 1 day
     secure: process.env.NODE_ENV === 'production', // Always use secure cookies in production
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site access in production, 'lax' for development
+    sameSite: 'none',
     httpOnly: true, // Prevents client-side access to the cookie
-    domain: process.env.NODE_ENV === 'production' ? 'https://quiz-mammoth.vercel.app' : undefined // Set this to your domain in production
+    domain: process.env.NODE_ENV === 'production' ? 'quiz-mammoth.vercel.app' : undefined // Set this to your domain in production
   }
 }));
 
