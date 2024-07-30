@@ -36,6 +36,8 @@ function App() {
          try {
           const response = await axios.get(`${apiBaseUrl}/api/users/${userId}`, {
             withCredentials: true,
+            maxRedirects: 0, // Don't follow redirects
+
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
