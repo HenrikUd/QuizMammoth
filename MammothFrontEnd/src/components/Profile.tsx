@@ -151,7 +151,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           <ul>
             {quizzes.map((quiz, index) => (
               <li key={quiz._id}>
-                <a href={`#/quizlist/${quiz.uuid}`}>Quiz {index + 1}: {quiz.title}</a>
+                <a href={`/quizlist/${quiz.uuid}`}>Quiz {index + 1}: {quiz.title}</a>
                 <button onClick={() => handleDeleteQuiz(quiz.uuid)}>Delete</button>
                 <button onClick={() => handleCopyLink(quiz.uuid)}>Copy Link</button>
               </li>
