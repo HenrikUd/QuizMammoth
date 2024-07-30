@@ -29,7 +29,7 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
-  const apiBaseUrl = process.env.VITE_API_URL;
+  const apiBaseUrl = import.meta.env.VITE_API_URL;
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [answers, setAnswers] = useState<{ [key: string]: Answer[] }>({});
   const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
