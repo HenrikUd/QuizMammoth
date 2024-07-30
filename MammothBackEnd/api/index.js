@@ -42,31 +42,29 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'https://quiz-mammoth.vercel.app/');
-  res.header('Access-Control-Allow-Origin', 'https://mammothbackend.vercel.app//');
-
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
-
 
 app.use(cors(corsOptions));
 
 // Session middleware configuration
 app.use(session({
-  secret: process.env.SESSION_SECRET, // Ensure this is set in your environment variables
-  resave: false, // Don't resave session if it hasn't been modified
-  saveUninitialized: false, // Don't save uninitialized sessions
-  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI, collectionName: 'sessions' }), // MongoDB session store
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({ 
+    mongoUrl: process.env.MONGODB_URI, 
+    collectionName: 'sessions' 
+  }),
   cookie: { 
     maxAge: 24 * 60 * 60 * 1000, // 1 day
-    secure: process.env.NODE_ENV === 'production', // Set secure cookies in production
-    sameSite: 'none' // Allows cross-site cookies
+    secure: process.env.NODE_ENV === 'production', // Always use secure cookies in production
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site access in production, 'lax' for development
+    httpOnly: true, // Prevents client-side access to the cookie
+    domain: process.env.NODE_ENV === 'production' ? 'https://quiz-mammoth.vercel.app' : undefined // Set this to your domain in production
   }
 }));
+
+// If you're behind a proxy (e.g., Nginx), you might also need this:
+app.set('trust proxy', 1);
 
 // Initialize Passport and session handling
 app.use(passport.initialize());
