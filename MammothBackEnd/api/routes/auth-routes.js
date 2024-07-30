@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 
 // Auth check
-app.get('/check', (req, res) => {
+router.get('/check', (req, res) => {
     console.log('Session ID:', req.sessionID);
     console.log('Session data:', req.session);
     console.log('Cookies:', req.headers.cookie);
