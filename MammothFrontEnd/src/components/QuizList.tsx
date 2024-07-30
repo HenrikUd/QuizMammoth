@@ -14,7 +14,7 @@ type QuizListProps = {
 };
 
 const QuizList: React.FC<QuizListProps> = (props) => {
-  const apiBaseUrl = process.env.VITE_API_URL || 'http://localhost:8082';
+  const apiBaseUrl = import.meta.env.VITE_API_URL;
   const { uuid } = useParams<{ uuid: string | undefined }>(); 
   const { userId } = useUser();
   const [questions, setQuestions] = useState<string[]>(props.inputs); // State for questions
