@@ -54,7 +54,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       
     const fetchUserProfile = async () => {
       
-      
+      console.log(apiBaseUrl)
         const userResponse = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`, { withCredentials: true });
         const quizzes: Quiz[] = userResponse.data.map((quiz: any) => ({
           ...quiz,
