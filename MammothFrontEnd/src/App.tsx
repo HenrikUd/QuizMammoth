@@ -35,7 +35,11 @@ function App() {
        const fetchUserData = async () => {
          try {
           const response = await axios.get(`${apiBaseUrl}/api/users/${userId}`, {
-            withCredentials: true // Include credentials in the request
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            }, 
           });
            setUser(response.data);
          } catch (error) {

@@ -28,21 +28,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app', 'quiz-mammoth.vercel.app'];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin, like mobile apps or curl requests
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true,
-}));
-
 
 // Session middleware configuration
 app.use(session({
@@ -64,6 +49,24 @@ app.use(session({
 
 // If you're behind a proxy (e.g., Nginx), you might also need this:
 app.set('trust proxy', 1);
+
+const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app', 'quiz-mammoth.vercel.app'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin, like mobile apps or curl requests
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+}));
+app.options('*', cors()); // Enable pre-flight for all routes
+
+
 
 // Initialize Passport and session handling
 app.use(passport.initialize());

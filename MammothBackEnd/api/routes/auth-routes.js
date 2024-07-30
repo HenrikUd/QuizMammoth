@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const passport = require('passport');
+const cors = require('cors');
+
 
 // Auth check
-router.get('/check', (req, res) => {
+router.get('/check', cors(), (req, res) => {
     console.log('Session ID:', req.sessionID);
     console.log('Session data:', req.session);
     console.log('Cookies:', req.headers.cookie);
@@ -16,24 +18,24 @@ router.get('/check', (req, res) => {
   });
 
 // Auth login
-router.get('/login', (req, res) => {
+router.get('/login', cors(), (req, res) => {
     res.render('login', { user: req.user });
 });
 
 // Auth logout
-router.get('/logout', (req, res) => {
+router.get('/logout', cors(), (req, res) => {
     req.logout();
     res.redirect('/');
 });
 
 // Auth with Google
-router.get('/google', passport.authenticate('google', {
+router.get('/google', cors(), passport.authenticate('google', {
     scope: ['profile'],
     prompt: 'select_account',
 }));
 
 // Callback route for Google to redirect to
-router.get('/google/redirect', (req, res, next) => {
+router.get('/google/redirect', cors(), (req, res, next) => {
     passport.authenticate('google', (err, user, info) => {
         if (err) {
             console.error('Google Authentication Error:', err);
@@ -56,7 +58,7 @@ router.get('/google/redirect', (req, res, next) => {
 });
 
 // Route to check if user is logged in and get user info
-router.get('/home', (req, res) => {
+router.get('/home', cors(), (req, res) => {
     const user = req.user;
     res.json({ user });
 });
