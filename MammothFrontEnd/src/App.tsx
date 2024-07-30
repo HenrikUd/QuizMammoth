@@ -34,7 +34,9 @@ function App() {
       
        const fetchUserData = async () => {
          try {
-           const response = await axios.get(`${apiBaseUrl}/api/users/${userId}`);
+          const response = await axios.get(`${apiBaseUrl}/api/users/${userId}`, {
+            withCredentials: true // Include credentials in the request
+          });
            setUser(response.data);
          } catch (error) {
            console.error('Error fetching user data:', error);
