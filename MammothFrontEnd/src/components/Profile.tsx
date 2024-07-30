@@ -55,14 +55,14 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     const fetchUserProfile = async () => {
       
       
-        const userResponse = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`);
+        const userResponse = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`, { withCredentials: true });
         const quizzes: Quiz[] = userResponse.data.map((quiz: any) => ({
           ...quiz,
           questions: quiz.quizzes.questions,
         })) || [];
         setQuizzes(quizzes);
 
-        const answersResponse = await axios.get(`${apiBaseUrl}/api/${userId}/answers/all`);
+        const answersResponse = await axios.get(`${apiBaseUrl}/api/${userId}/answers/all`, { withCredentials: true });
         const rawAnswers: Answer[] = answersResponse.data || [];
 
         const groupedAnswers = rawAnswers.reduce((acc, answer) => {

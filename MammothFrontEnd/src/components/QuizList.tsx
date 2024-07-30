@@ -25,7 +25,7 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`);
+        const response = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`, { withCredentials: true });
         const quizData = response.data;
         
         // Find the quiz object with the matching UUID

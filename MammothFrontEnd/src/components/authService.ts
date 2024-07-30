@@ -10,7 +10,7 @@ export const googleAuth = () => {
 export const getHome = async () => {
     
     try {
-        const response = await axios.get(`${apiBaseUrl}/home`);
+        const response = await axios.get(`${apiBaseUrl}/home`, { withCredentials: true });
         return response.data;
         
     } catch (error) {
