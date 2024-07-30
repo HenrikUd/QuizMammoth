@@ -79,12 +79,13 @@ app.use('/api/answers', answerRoutes);
 app.get('/api/auth/check', (req, res) => {
   console.log('Session ID:', req.sessionID);
   console.log('Session data:', req.session);
+  console.log('Cookies:', req.headers.cookie);
   if (req.isAuthenticated()) {
-      console.log('User is authenticated:', req.user);
-      res.json({ loggedIn: true, userId: req.user._id });
+    console.log('User is authenticated:', req.user);
+    res.json({ loggedIn: true, userId: req.user._id });
   } else {
-      console.log('User is not authenticated');
-      res.json({ loggedIn: false });
+    console.log('User is not authenticated');
+    res.json({ loggedIn: false });
   }
 });
 
