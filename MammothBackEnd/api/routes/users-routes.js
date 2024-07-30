@@ -20,10 +20,5 @@ router.get('/:userId', cors(), async (req, res) => {
     }
 });
 
-// Add a catch-all route to log unhandled requests
-router.use('*', (req, res) => {
-    console.log('Unhandled user route request:', req.method, req.originalUrl);
-    res.status(404).json({ message: 'User route not found' });
-});
 
 module.exports = router;
