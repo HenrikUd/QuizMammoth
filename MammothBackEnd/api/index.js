@@ -43,7 +43,7 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production', // Always use secure cookies in production
     sameSite: 'none',
     httpOnly: true, // Prevents client-side access to the cookie
-    domain: 'mammothbackend.vercel.app' // Set this to your domain in production
+    domain: 'vercel.app' // Set this to your domain in production
   }
 }));
 

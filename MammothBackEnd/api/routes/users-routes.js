@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/user-model.js');
-const cors = require('cors');
 
 // Apply CORS middleware to this route
-router.get('/:userId', cors(), async (req, res) => {
+router.get('/:userId', async (req, res) => {
     console.log('Received request for user:', req.params.userId);
     try {
         const user = await User.findById(req.params.userId);
