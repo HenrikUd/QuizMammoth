@@ -1,6 +1,20 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+// Auth check
+app.get('/check', (req, res) => {
+    console.log('Session ID:', req.sessionID);
+    console.log('Session data:', req.session);
+    console.log('Cookies:', req.headers.cookie);
+    if (req.isAuthenticated()) {
+      console.log('User is authenticated:', req.user);
+      res.json({ loggedIn: true, userId: req.user._id });
+    } else {
+      console.log('User is not authenticated');
+      res.json({ loggedIn: false });
+    }
+  });
+
 // Auth login
 router.get('/login', (req, res) => {
     res.render('login', { user: req.user });
