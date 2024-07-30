@@ -28,7 +28,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app', 'quiz-mammoth.vercel.app'];
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -59,7 +59,7 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production', // Always use secure cookies in production
     sameSite: 'none',
     httpOnly: true, // Prevents client-side access to the cookie
-    domain: 'quiz-mammoth.vercel.app' // Set this to your domain in production
+    domain: 'mammothbackend.vercel.app' // Set this to your domain in production
   }
 }));
 
