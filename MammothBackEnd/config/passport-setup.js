@@ -17,19 +17,11 @@ passport.use(new GoogleStrategy({
     callbackURL: 'https://mammothbackend.vercel.app/api/auth/google/redirect',
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    scope: ['profile'] // No need for email scope
 }, (accessToken, refreshToken, profile, done) => {
     console.log('Access Token:', accessToken);
     console.log('Refresh Token:', refreshToken);
-    console.log('Profile:', profile); // Add this line to debug profile data
-
-    // Extract email from profile
-    const email = profile.emails && profile.emails[0].value ? profile.emails[0].value : null;
-
-    if (!email) {
-        // Handle the case where the email is not present
-        console.error('No email found in profile:', profile);
-        return done(new Error('No email found in profile'), null);
-    }
+    console.log('Profile:', profile);
 
     User.findOne({ googleId: profile.id })
         .then(currentUser => {
@@ -40,7 +32,6 @@ passport.use(new GoogleStrategy({
                 new User({
                     username: profile.displayName,
                     googleId: profile.id,
-                    email: email, // Ensure email is included here
                     accessToken: accessToken,  // Optional
                     refreshToken: refreshToken // Optional
                 }).save()

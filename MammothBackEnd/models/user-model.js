@@ -7,16 +7,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  email: {
-    type: String,
-    required: true, // Email is now required
-    unique: true,
-    sparse: false
-  },
-  password: {
-    type: String,
-    required: false
-  },
   googleId: {
     type: String,
     unique: true // Assuming Google IDs are unique
