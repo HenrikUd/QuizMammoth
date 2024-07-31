@@ -31,6 +31,7 @@ passport.use(new GoogleStrategy({
                 new User({
                     username: profile.displayName,
                     googleId: profile.id,
+                    email: email,
                     accessToken: accessToken,  // Optional
                     refreshToken: refreshToken // Optional
                 }).save()
