@@ -36,37 +36,43 @@ const QuizList: React.FC<QuizListProps> = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
+        console.log("Raw response data:", response.data);
+        console.log("Type of response data:", typeof response.data);
+  
         const data = response.data;
         
-        console.log("Raw response data:", data); // Log raw data for debugging
-  
         let quiz: Quiz | undefined;
-        if (Array.isArray(data)) {
-          // If data is an array, find the quiz with matching UUID
-          quiz = data.find((q): q is Quiz => 'uuid' in q && q.uuid === uuid);
-        } else if (typeof data === 'object' && data !== null) {
-          // If data is an object, it might be a single quiz or have a different structure
-          if ('uuid' in data && data.uuid === uuid) {
+  
+        if (typeof data === 'object' && data !== null) {
+          if (Array.isArray(data)) {
+            quiz = data.find((q): q is Quiz => 'uuid' in q && q.uuid === uuid);
+          } else if ('uuid' in data && data.uuid === uuid) {
             quiz = data as Quiz;
           } else {
-            // If it's an object with quiz arrays, search through its values
-            quiz = Object.values(data).find((q): q is Quiz => 
+            // If it's an object, but not an array and not a single quiz,
+            // it might be an object containing quizzes
+            const quizzes = Object.values(data);
+            quiz = quizzes.find((q): q is Quiz => 
               typeof q === 'object' && q !== null && 'uuid' in q && q.uuid === uuid
             );
           }
         }
-    
+  
         if (quiz && 'quizzes' in quiz && Array.isArray(quiz.quizzes.questions)) {
           const questions = quiz.quizzes.questions;
           setQuestions(questions);
-          setAnswers(Array(questions.length).fill("")); // Initialize answers state with empty strings
-          console.log("Found questions:", questions); 
+          setAnswers(Array(questions.length).fill("")); 
+          console.log("Found questions:", questions);
         } else {
           console.error("Quiz not found or has invalid structure for UUID:", uuid);
-          console.log("Processed data:", quiz); // Log the processed quiz data for debugging
+          console.log("Processed data:", quiz);
         }
       } catch (error) {
         console.error("Error fetching quiz data:", error);
+        if (error instanceof Error) {
+          console.error("Error message:", error.message);
+          console.error("Error stack:", error.stack);
+        }
       }
     };
   
