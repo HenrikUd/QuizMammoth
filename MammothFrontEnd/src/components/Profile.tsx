@@ -115,13 +115,6 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         return updatedAnswers;
       });
   
-      // Optionally, update the quizzes state if needed
-      setQuizzes((prevQuizzes) => {
-        return prevQuizzes.filter(quiz => {
-          const quizHasAnswers = answers[quiz.uuid]?.some(answer => answer.uuid !== answerUuid);
-          return quizHasAnswers;
-        });
-      });
   
     } catch (error) {
       setDeleteStatus('Error deleting answer');
