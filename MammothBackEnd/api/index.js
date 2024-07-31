@@ -43,7 +43,7 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production', 
     sameSite: 'none',
     httpOnly: true, // Prevents client-side access to the cookie
-    domain: 'vercel.app' // to allow cookie movement between backend and frontend
+    domain: 'mammothbackend.vercel.app' // to allow cookie movement between backend and frontend
   }
 }));
 
