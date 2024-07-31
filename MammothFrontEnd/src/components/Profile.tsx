@@ -101,17 +101,28 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         withCredentials: true,
       });
       setDeleteStatus('Answer deleted successfully');
-      window.location.reload();
-
   
-      // Update the answers state
+      // Update the answers state without refreshing the page
       setAnswers((prevAnswers) => {
         const updatedAnswers = { ...prevAnswers };
         for (const uuid in updatedAnswers) {
           updatedAnswers[uuid] = updatedAnswers[uuid].filter(answer => answer.uuid !== answerUuid);
+          // Remove the quiz entirely if it has no more answers
+          if (updatedAnswers[uuid].length === 0) {
+            delete updatedAnswers[uuid];
+          }
         }
         return updatedAnswers;
       });
+  
+      // Optionally, update the quizzes state if needed
+      setQuizzes((prevQuizzes) => {
+        return prevQuizzes.filter(quiz => {
+          const quizHasAnswers = answers[quiz.uuid]?.some(answer => answer.uuid !== answerUuid);
+          return quizHasAnswers;
+        });
+      });
+  
     } catch (error) {
       setDeleteStatus('Error deleting answer');
       console.error('Error deleting answer', error);
