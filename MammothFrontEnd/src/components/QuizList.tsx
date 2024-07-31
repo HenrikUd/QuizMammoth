@@ -13,6 +13,15 @@ type QuizListProps = {
   uuid: string | undefined;
 };
 
+interface QuizData {
+  [key: string]: {
+    uuid: string;
+    quizzes: {
+      questions: string[];
+    };
+  };
+}
+
 const QuizList: React.FC<QuizListProps> = (props) => {
   const apiBaseUrl = import.meta.env.VITE_API_URL;
   const { uuid } = useParams<{ uuid: string | undefined }>(); 
@@ -25,11 +34,11 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
+        const response = await axios.get<QuizData>(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
         const quizData = response.data;
         
         // Find the quiz object with the matching UUID
-        const quiz = quizData.find((quiz: any) => quiz.uuid === uuid);
+        const quiz = Object.values(quizData).find((quiz) => quiz.uuid === uuid);
     
         if (quiz) {
           // Extract questions array from the quiz object
@@ -47,10 +56,10 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   
     if (props.inputs.length === 0 || uuid !== prevUuid.current) {
       fetchData();
-    }
+    };
   
     prevUuid.current = uuid;
-  }, [uuid, props.inputs]); // Include uuid and props.inputs in the dependency array
+  }, [uuid, props.inputs, userId, apiBaseUrl]); // Include uuid and props.inputs in the dependency array
 
   const handleInputChange = (index: number, value: string) => {
     setAnswers((prevAnswers) => {
