@@ -13,13 +13,14 @@ type QuizListProps = {
   uuid: string | undefined;
 };
 
-interface QuizData {
-  [key: string]: {
-    uuid: string;
-    quizzes: {
-      questions: string[];
-    };
+interface Quiz {
+  quizzes: {
+    questions: string[];
   };
+  _id: string;
+  userId: string;
+  uuid: string;
+  __v: number;
 }
 
 const QuizList: React.FC<QuizListProps> = (props) => {
@@ -34,11 +35,11 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<QuizData>(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
-        const quizData = response.data;
+        const response = await axios.get<Quiz[]>(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
+        const quizzes = response.data;
         
         // Find the quiz object with the matching UUID
-        const quiz = Object.values(quizData).find((quiz) => quiz.uuid === uuid);
+        const quiz = quizzes.find((quiz) => quiz.uuid === uuid);
     
         if (quiz) {
           // Extract questions array from the quiz object
