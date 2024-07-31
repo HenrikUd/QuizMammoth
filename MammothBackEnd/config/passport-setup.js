@@ -22,7 +22,7 @@ passport.use(new GoogleStrategy({
     console.log('Refresh Token:', refreshToken);
     console.log('Profile:', profile); // Add this line to debug profile data
 
-    const email = profile.emails && profile.emails[0].value ? profile.emails[0].value : null;
+    const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
 
     User.findOne({ googleId: profile.id })
         .then(currentUser => {
