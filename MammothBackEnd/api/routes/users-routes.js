@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../models/user-model.js');
 
-// Apply CORS middleware to this route
 router.get('/:userId', async (req, res) => {
     console.log('Received request for user:', req.params.userId);
     try {

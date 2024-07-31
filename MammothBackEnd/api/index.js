@@ -40,14 +40,13 @@ app.use(session({
   }),
   cookie: { 
     maxAge: 24 * 60 * 60 * 1000, // 1 day
-    secure: process.env.NODE_ENV === 'production', // Always use secure cookies in production
+    secure: process.env.NODE_ENV === 'production', 
     sameSite: 'none',
     httpOnly: true, // Prevents client-side access to the cookie
-    domain: 'vercel.app' // Set this to your domain in production
+    domain: 'vercel.app' // to allow cookie movement between backend and frontend
   }
 }));
 
-// If you're behind a proxy (e.g., Nginx), you might also need this:
 app.set('trust proxy', 1);
 
 const allowedOrigins = ['http://localhost:5173', 'https://quiz-mammoth.vercel.app', 'https://mammothbackend.vercel.app', 'quiz-mammoth.vercel.app'];
@@ -75,11 +74,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api', userQuizRoutes); 
-app.use('/api/answers', answerRoutes);
+app.use('/api', answerRoutes);
 
 
-/* app.use(express.static(path.join(__dirname, '..', 'MammothFrontEnd', 'build')));
- */
+
 app.get('/', (req, res) => {
     res.status(200).send('Hello, World, This is my API!, Check it out!');
 });
@@ -89,22 +87,6 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-/* app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'MammothFrontEnd', 'build', 'index.html'));
-}); */
 
-/* connectDB()
-  .then(() => {
-    const port = process.env.PORT || 8082;
-    app.listen(port, () => console.log(`Server running on port ${port}`));
-  })
-  .catch(err => {
-    console.error('Error connecting to MongoDB:', err);
-    process.exit(1);
-  }); */
-
- /*  app.use('*', (req, res) => {
-    res.status(404).json({ error: 'Not Found' });
-  }); */
 
   module.exports = app;
