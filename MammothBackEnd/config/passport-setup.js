@@ -22,7 +22,14 @@ passport.use(new GoogleStrategy({
     console.log('Refresh Token:', refreshToken);
     console.log('Profile:', profile); // Add this line to debug profile data
 
-    const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
+    // Extract email from profile
+    const email = profile.emails && profile.emails[0].value ? profile.emails[0].value : null;
+
+    if (!email) {
+        // Handle the case where the email is not present
+        console.error('No email found in profile:', profile);
+        return done(new Error('No email found in profile'), null);
+    }
 
     User.findOne({ googleId: profile.id })
         .then(currentUser => {
@@ -30,27 +37,21 @@ passport.use(new GoogleStrategy({
                 console.log('User found:', currentUser);
                 done(null, currentUser);
             } else {
-                const newUser = new User({
+                new User({
                     username: profile.displayName,
                     googleId: profile.id,
+                    email: email, // Ensure email is included here
                     accessToken: accessToken,  // Optional
                     refreshToken: refreshToken // Optional
+                }).save()
+                .then(newUser => {
+                    console.log('New user created:', newUser);
+                    done(null, newUser);
+                })
+                .catch(err => {
+                    console.error('Error creating new user:', err);
+                    done(err, null);
                 });
-
-                // Add email only if it's not null
-                if (email) {
-                    newUser.email = email;
-                }
-
-                newUser.save()
-                    .then(newUser => {
-                        console.log('New user created:', newUser);
-                        done(null, newUser);
-                    })
-                    .catch(err => {
-                        console.error('Error creating new user:', err);
-                        done(err, null);
-                    });
             }
         })
         .catch(err => {

@@ -9,9 +9,9 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-  required: false,
-  unique: true,
-  sparse: true
+    required: true, // Email is now required
+    unique: true,
+    sparse: false
   },
   password: {
     type: String,
