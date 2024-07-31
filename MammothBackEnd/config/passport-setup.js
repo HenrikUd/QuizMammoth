@@ -22,6 +22,9 @@ passport.use(new GoogleStrategy({
     console.log('Access Token:', accessToken);
     console.log('Refresh Token:', refreshToken);
 
+    const email = profile.emails && profile.emails[0].value ? profile.emails[0].value : null;
+
+
     User.findOne({ googleId: profile.id })
         .then(currentUser => {
             if (currentUser) {
