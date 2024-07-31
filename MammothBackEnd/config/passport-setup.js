@@ -16,7 +16,8 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
     callbackURL: 'https://mammothbackend.vercel.app/api/auth/google/redirect',
     clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    scope: ['profile', 'email'] // Add the email scope here
 }, (accessToken, refreshToken, profile, done) => {
     console.log('Access Token:', accessToken);
     console.log('Refresh Token:', refreshToken);
