@@ -17,10 +17,10 @@ interface Quiz {
   quizzes: {
     questions: string[];
   };
-  _id: string;
-  userId: string;
+  _id?: string;
+  userId?: string;
   uuid: string;
-  __v: number;
+  __v?: number;
 }
 
 const QuizList: React.FC<QuizListProps> = (props) => {
@@ -35,20 +35,35 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<Quiz[]>(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
-        const quizzes = response.data;
+        const response = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
+        const data = response.data;
         
-        // Find the quiz object with the matching UUID
-        const quiz = quizzes.find((quiz) => quiz.uuid === uuid);
+        console.log("Raw response data:", data); // Log raw data for debugging
+  
+        let quiz: Quiz | undefined;
+        if (Array.isArray(data)) {
+          // If data is an array, find the quiz with matching UUID
+          quiz = data.find((q): q is Quiz => 'uuid' in q && q.uuid === uuid);
+        } else if (typeof data === 'object' && data !== null) {
+          // If data is an object, it might be a single quiz or have a different structure
+          if ('uuid' in data && data.uuid === uuid) {
+            quiz = data as Quiz;
+          } else {
+            // If it's an object with quiz arrays, search through its values
+            quiz = Object.values(data).find((q): q is Quiz => 
+              typeof q === 'object' && q !== null && 'uuid' in q && q.uuid === uuid
+            );
+          }
+        }
     
-        if (quiz) {
-          // Extract questions array from the quiz object
+        if (quiz && 'quizzes' in quiz && Array.isArray(quiz.quizzes.questions)) {
           const questions = quiz.quizzes.questions;
           setQuestions(questions);
           setAnswers(Array(questions.length).fill("")); // Initialize answers state with empty strings
-          console.log(questions); 
+          console.log("Found questions:", questions); 
         } else {
-          console.error("Quiz not found for UUID:", uuid);
+          console.error("Quiz not found or has invalid structure for UUID:", uuid);
+          console.log("Processed data:", quiz); // Log the processed quiz data for debugging
         }
       } catch (error) {
         console.error("Error fetching quiz data:", error);
@@ -57,10 +72,10 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   
     if (props.inputs.length === 0 || uuid !== prevUuid.current) {
       fetchData();
-    };
+    }
   
     prevUuid.current = uuid;
-  }, [uuid, props.inputs, userId, apiBaseUrl]); // Include uuid and props.inputs in the dependency array
+  }, [uuid, props.inputs, userId, apiBaseUrl]);
 
   const handleInputChange = (index: number, value: string) => {
     setAnswers((prevAnswers) => {
