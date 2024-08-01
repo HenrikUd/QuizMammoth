@@ -23,8 +23,10 @@ router.post('/:userId/quizzes', async (req, res) => {
 
 // Endpoint to get all quizzes for a user
 router.get('/:userId/quizzes/all', async (req, res) => {
+  const { userId } = req.params;
+
   try {
-    const quizzes = await Quiz.find();
+    const quizzes = await Quiz.find({ userId });
     res.status(200).json(quizzes);
   } catch (error) {
     console.error('Error fetching quizzes:', error);
