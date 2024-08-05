@@ -11,12 +11,12 @@ interface SubmitAnswersProps {
 const SubmitAnswers: React.FC<SubmitAnswersProps> = ({ answers, uuid }) => {
   const apiBaseUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const { userId } = useUser(); // Use context to get the userId
+  const { userId } = useUser(); // context to get the userId
   const [answerData, setAnswerData] = useState<any>({ answers: [] });
 
 
   useEffect(() => {
-    // Update the state when props change
+    // updates the state when props change
     setAnswerData({
       answers: answers,
     });
@@ -34,12 +34,10 @@ const SubmitAnswers: React.FC<SubmitAnswersProps> = ({ answers, uuid }) => {
       .then((res) => {
         console.log('Answers submitted:', { ...answerData, uuid });
         console.log(res);
-        // Handle the response or perform any additional actions
         navigate("/thankyou");
       })
       .catch((err) => {
         console.error("Error in CreateAnswer!", err.response);
-        // Handle the error
       });
   };
 

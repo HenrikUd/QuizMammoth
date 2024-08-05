@@ -44,7 +44,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     const handleRedirect = async () => {
       await checkAuthStatus(); 
       if (!userId) {
-        navigate('/auth/login'); // Navigate to profile if userId is available
+        navigate('/auth/login'); // navigate to profile if userId is not available
       }
     };
 
@@ -52,7 +52,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     
     if (userId) {
       
-    const fetchUserProfile = async () => {
+    const fetchUserProfile = async () => {  // if userId is present, fetches all quizzes saved for that user
       
         const userResponse = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/all`, { withCredentials: true });
         const quizzes: Quiz[] = userResponse.data.map((quiz: any) => ({
@@ -61,7 +61,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         })) || [];
         setQuizzes(quizzes);
 
-        const answersResponse = await axios.get(`${apiBaseUrl}/api/${userId}/answers/all`, { withCredentials: true });
+        const answersResponse = await axios.get(`${apiBaseUrl}/api/${userId}/answers/all`, { withCredentials: true });  // same for answers
         const rawAnswers: Answer[] = answersResponse.data || [];
 
         const groupedAnswers = rawAnswers.reduce((acc, answer) => {
@@ -79,7 +79,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     fetchUserProfile();
 }}, [userId]);
 
-  const handleDeleteQuiz = async (quizUuid: string) => {
+  const handleDeleteQuiz = async (quizUuid: string) => {  // delete by uuid
   
     try {
       await axios.delete(`${apiBaseUrl}/api/${userId}/quizzes`, {
@@ -102,15 +102,15 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       });
       setDeleteStatus('Answer deleted successfully');
   
-      // Update the answers state without refreshing the page
+      // updates the answers state without refreshing the page
       setAnswers((prevAnswers) => {
         const updatedAnswers = { ...prevAnswers };
         for (const uuid in updatedAnswers) {
           updatedAnswers[uuid] = updatedAnswers[uuid].filter(answer => answer.uuid !== answerUuid);
           // Remove the quiz entirely if it has no more answers
-          if (updatedAnswers[uuid].length === 0) {
+          /* if (updatedAnswers[uuid].length === 0) {
             delete updatedAnswers[uuid];
-          }
+          } */
         }
         return updatedAnswers;
       });

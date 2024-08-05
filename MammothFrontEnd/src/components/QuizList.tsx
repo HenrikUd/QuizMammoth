@@ -27,13 +27,13 @@ const QuizList: React.FC<QuizListProps> = (props) => {
   const apiBaseUrl = import.meta.env.VITE_API_URL;
   const { uuid } = useParams<{ uuid: string | undefined }>(); 
   const { userId } = useUser();
-  const [questions, setQuestions] = useState<string[]>(props.inputs); // State for questions
-  const [answers, setAnswers] = useState<string[]>(() => props.answers.length > 0 ? props.answers : Array(props.inputs.length).fill("")); // Separate state for answers
+  const [questions, setQuestions] = useState<string[]>(props.inputs); // state for questions
+  const [answers, setAnswers] = useState<string[]>(() => props.answers.length > 0 ? props.answers : Array(props.inputs.length).fill("")); // separates state for answers
 
   const prevUuid = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async () => {   // fetches data from api and sets up the quiz state. finds the quiz by uuid
       try {
         const response = await axios.get(`${apiBaseUrl}/api/${userId}/quizzes/${uuid}`, { withCredentials: true });
         console.log("Raw response data:", response.data);

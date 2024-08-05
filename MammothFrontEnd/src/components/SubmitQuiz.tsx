@@ -14,10 +14,10 @@ interface SubmitQuizProps {
 const SubmitQuiz: React.FC<SubmitQuizProps> = ({ theinputs, answers }) => {
   const apiBaseUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const { setUuid } = useUUID(); // Use context to set the UUID
+  const { setUuid } = useUUID(); // context to set the UUID
   const { userId } = useUser();
   const [quizzes, setQuizzes] = useState<{ questions: string[] }>({ questions: [] });
-  const [uuid, setLocalUuid] = useState<string | null>(null); // Local state to hold the UUID
+  const [uuid, setLocalUuid] = useState<string | null>(null); //lLocal state to hold the UUID
 
   useEffect(() => {
     setQuizzes({ questions: theinputs });

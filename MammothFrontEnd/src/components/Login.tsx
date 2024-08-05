@@ -7,14 +7,14 @@ const Login: React.FC = () => {
   const { userId, checkAuthStatus } = useUser();
 
   useEffect(() => {
-    checkAuthStatus(); // Ensure auth status is checked on mount
+    checkAuthStatus(); // ensures auth status is checked on mount
   }, []);
 
   const handleGoogleLogin = () => {
-    googleAuth(); // Redirect to Google OAuth
+    googleAuth(); // redirects to Google OAuth
   };
 
-  if (userId) { // If user is already logged in, redirect to profile
+  if (userId) { // if user is already logged in, redirects to profile
     return <Navigate to="/profile" />;
   }
 

@@ -22,7 +22,7 @@ export interface User {
 }
 
 function App() {
-  const [inputs, setInputs] = useState([""]);
+  const [inputs, setInputs] = useState([""]);  // question boxes
   const [answers, setAnswers] = useState<string[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const { userId, isLoading } = useUser();
@@ -32,11 +32,11 @@ function App() {
   useEffect(() => {
     if (userId) {
       
-       const fetchUserData = async () => {
+       const fetchUserData = async () => {       //gets user data if user is logged in
          try {
           const response = await axios.get(`${apiBaseUrl}/api/users/${userId}`, {
             withCredentials: true,
-            maxRedirects: 0, // Don't follow redirects
+            maxRedirects: 0, 
 
             headers: {
               'Content-Type': 'application/json',

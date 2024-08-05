@@ -8,19 +8,19 @@ const QuizForm: React.FC<{ setInputs: React.Dispatch<React.SetStateAction<string
   const { userId, checkAuthStatus } = useUser();
 
   useEffect(() => {
-    checkAuthStatus(); // Ensure auth status is checked on mount
+    checkAuthStatus(); // checks auth status on mount
   }, []);
 
-  if (!userId) { // Login check
+  if (!userId) { // login check
     return <Navigate to="/auth/login" state={{ message: 'You must be logged in to view this page' }} />;
   }
 
-  const handleInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => { // Input handler
+  const handleInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => { // input handler
     e.preventDefault();
     setInputs(inputs.concat(""));
   };
 
-  const removeInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => { // Input remove
+  const removeInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => { // input remove
     e.preventDefault();
     setInputs(inputs.slice(0, inputs.length - 1));
   };
